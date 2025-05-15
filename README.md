@@ -43,22 +43,6 @@ A location tracking and area monitoring system built with NestJS. This applicati
 
 ## Installation
 
-## Project Structure 
-
-location-log/
-├── prisma/               # Prisma schema
-├── src/                  # Source code
-│   ├── areas/            # Area module with caching
-│   ├── locations/        # Location module
-│   ├── logs/             # Log module
-│   ├── prisma/           # Prisma service
-│   └── app.module.ts     # Main module
-├── test/                 # E2E tests
-├── .env                  # Environment variables
-├── package.json          # Dependencies
-├── tsconfig.json         # TypeScript config
-└── README.md             # Documentation
-
 ```bash
 # Clone the repository
 git clone [https://github.com/erkambozan/location-log.git]
