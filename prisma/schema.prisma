@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  locations Location[]
+  logs      Log[]
+}
+
+model Area {
+  id        Int       @id @default(autoincrement())
+  name      String
+  polygon   Json // GeoJSON formatında çokgen
+  logs      Log[]
+}
+
+model Location {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  latitude  Float
+  longitude Float
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model Log {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  areaId    Int
+  entryTime DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
+  area      Area      @relation(fields: [areaId], references: [id])
+}
