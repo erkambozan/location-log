@@ -1,40 +1,41 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
   locations Location[]
   logs      Log[]
+
+  @@index([id])
 }
 
 model Area {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  polygon   Json // GeoJSON formatında çokgen
+  polygon   Json
   logs      Log[]
+
+  @@index([id])
 }
 
 model Location {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
   latitude  Float
   longitude Float
-  createdAt DateTime  @default(now())
-  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model Log {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
   areaId    Int
-  entryTime DateTime  @default(now())
-  user      User      @relation(fields: [userId], references: [id])
-  area      Area      @relation(fields: [areaId], references: [id])
+  entryTime DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  area      Area     @relation(fields: [areaId], references: [id])
+
+  @@index([userId, areaId])
+  @@index([entryTime])
 }
